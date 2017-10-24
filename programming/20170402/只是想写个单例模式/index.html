@@ -1,0 +1,348 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable"  content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <link rel="dns-prefetch" href="//t11.baidu.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>只是想写个单例模式 | ZhangYuanXia</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="ZhangYuanXia" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+    
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header">
+    <div class="main-header-box">
+        <a class="branding" href="/" title="">
+            <img src="/img/header_logo.png" alt="Snippet 博客主题">
+        </a>
+        <h2 class="text-hide">Snippet主题</h2>
+        <img src="/img/header_logo.png" alt="Snippet 博客主题" class="hide">
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class=""><a href="/">首页</a></li>
+                        
+                            <li role="presentation" class=""><a href="/categories/programming/">编程</a></li>
+                        
+                            <li role="presentation" class=""><a href="/categories/Hexo/">Hexo</a></li>
+                        
+                            <li role="presentation" class=""><a href="/resume/">简历</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="只是想写个单例模式">
+            
+            只是想写个单例模式
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>编程</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+		
+			<i class="fa fa-tags"></i>
+			<span class="tags-meta">
+				Java
+			</span>
+		
+			<i class="fa fa-tags"></i>
+			<span class="tags-meta">
+				Singleton
+			</span>
+		
+		
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2017/04/02</span>
+    </span>
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body">
+        <p>遥想当年，在西南某大学校花下，手捧《设计模式》的时候，玩得最6的就是单例模式了。想起那几行代码就能够得满分的那种感觉啊，再伴着校花的芳香，简直…了…</p>
+<h2 id="说写就写"><a href="#说写就写" class="headerlink" title="说写就写"></a>说写就写</h2><p>单例模式，故名思议就是实例在任何时候只有一个，有时候需要一个类在任意时刻只存在一个实例，比如你看到的太阳和我看到的太阳就是同一个，不多说，来敲代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class Singleton&#123;</div><div class="line">      private static Singleton instance = null;  </div><div class="line">      private Singleton()&#123;....&#125;</div><div class="line">      public static Singleton getInstance()&#123;</div><div class="line">           if(instance == null)&#123;</div><div class="line">                   instance = new Singleton();</div><div class="line">           &#125;</div><div class="line">           return instance;</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>单例模式，要满足的是实例只有一个，既然只能一个，那就不能够随便实例化，这里将构造方法进行私有化，那么在外部就无法调用构造器进行实例化了，那么只能在类内部去调用构造器进行实例化，再提供一个获取实例的静态方法，这样<strong>基础的单例模式</strong>也就成了。</p>
+<h2 id="你以为的单例还不是单例"><a href="#你以为的单例还不是单例" class="headerlink" title="你以为的单例还不是单例"></a>你以为的单例还不是单例</h2><p>what？上面实现的不是单例模式那还能是什么？仔细想想，单例模式就是要控制对象只能创建一个，上面通过将构造器私有化来保证构造器被别人调用，但是想想对象会不会通过别的途径来创建呢？ 对象创建的途径有四种，构造器、克隆、反序列化、反射，那我们就得保证所有途径都不会产生多余的实例。</p>
+<p>首先构造被私有化了，问题没了，克隆需要实现对应的接口Cloneable 才能够进行，都要单例了，克隆功能也就可以排除不用了。</p>
+<p>但是反序列化可不能随便去掉，反序列化这么好的东西总不能因为实现单例模式就给抛弃掉吧。那又如何处理呢？首先类实现了接口（Serializable）可以通过反序列化来生成一个对象，我们要保证的就是在单例模式下，反序列化生成的对象不会破坏我们的单例，这也不用我们保证，Java为我们保证了这一切。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Singleton implements Serializable &#123;</div><div class="line"></div><div class="line">      private static final long serialVersionUID = 1L;  </div><div class="line">      private static Singleton instance = null;</div><div class="line">      private Singleton()&#123;....&#125;</div><div class="line">      public static Singleton getInstance()&#123;</div><div class="line">           if(instance == null)&#123;</div><div class="line">                   instance = new Singleton();</div><div class="line">           &#125;</div><div class="line">           return instance;</div><div class="line">      &#125;</div><div class="line">      private Object readResolve() &#123;return singleton;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对比第一段代码和第二段代码，在加了Serializable 接口以外我们还增加了方法readResolve()，这个方法在Serializable 接口中是这样描述的：“Classes that need to designate a replacement when an instance of it is read from the stream should implement this special method with the exact signature.” 大概意思就是说可以通过这个方法返回一个实例来替代从流中读取的实例了。这样便解决了反序列化对单例模式的破坏。</p>
+<p>还有反射，我们知道发射可以通过使用newInstance()方法来创建一个实例，但是有人会说，newInstance也是调用的构造方法进行实例，现在构造方法为私有的，怎么能够调用呢？别忘了反射是个强大的功能，一句setAccessible(true)就可以调用你私有的构造器了。为了阻止这样的情况发生，那又该如何来写呢？实际上我们要做的就是防止构造器被多次调用，来看代码.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class Singleton&#123;</div><div class="line">      private static Singleton instance = null;  </div><div class="line">      private static flag = false;</div><div class="line">      private Singleton()&#123;</div><div class="line">            if(flag == false)&#123;</div><div class="line">                  flag = true;</div><div class="line">                  ....</div><div class="line">            &#125;else&#123;</div><div class="line">                    throw new RuntimeException(&quot;不能乱来，实例已经创建好了，请走正门&quot;)</div><div class="line">            &#125;</div><div class="line">      &#125;</div><div class="line">      public static Singleton getInstance()&#123;</div><div class="line">           if(instance == null)&#123;</div><div class="line">                   instance = new Singleton();</div><div class="line">           &#125;</div><div class="line">           return instance;</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实在想不出什么场景下会把已有的instance给清空，所以就不考虑构造器内部多次调用了。</p>
+<p>这样这个单例模式看上去就没什么问题了，每调用一次先判断是否有实例，没有就创建，下次调用就有了，直接返回，通过以上的途径来保证不会重复创建对象。等等，会不会出现两次调用实例都没有的情况呢？</p>
+<h2 id="线程安全的单例模式才是王道"><a href="#线程安全的单例模式才是王道" class="headerlink" title="线程安全的单例模式才是王道"></a>线程安全的单例模式才是王道</h2><p>如果两个线程同时来请求调用getInstance()，会出现什么样的情况呢？首先在程序运行过程中，是一段一段的顺序执行我们的代码，多线程情况下如果两个线程同时执行到if(instance == null),那肯定不用多说这是会出问题的。那么我们需要一个线程安全的单例类，来保证在多线程情况下是没有问题的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class Singleton&#123;</div><div class="line">      private static Singleton instance = null;  </div><div class="line">      private static flag = false;</div><div class="line">      private Singleton()&#123;</div><div class="line">            if(flag == false)&#123;</div><div class="line">                  flag = true;</div><div class="line">                  ....</div><div class="line">            &#125;else&#123;</div><div class="line">                    throw new RuntimeException(&quot;不能乱来，实例已经创建好了，请走正门&quot;)</div><div class="line">            &#125;</div><div class="line">      &#125;</div><div class="line">      public static synchronized Singleton getInstance()&#123;</div><div class="line">           if(instance == null)&#123;</div><div class="line">                   instance = new Singleton();</div><div class="line">           &#125;</div><div class="line">           return instance;</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在getInstance方法前加上synchronized就能够保证我们的单例类是安全的了，在每一个线程进行请求时，如果没有线程进入这个方法它就进入执行，有则等待，这样就没有人同时去执行if(instance == null)的判断了，但是这似乎又给我们带来了累赘，在绝大多数的时候，单例类的实例是已经创建好了的，我们只用去请求，这时候并不需要进行线程安全控制，不需要同步，用同步反而影响了多线程的运行效率，那又当如何改善呢，这也不是什么难事，Google一下你就知道有种叫double-check 的处理方式，如何处理呢，看名称就知道要进行两次检查，先看代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Singleton&#123;</div><div class="line">      private static Singleton instance = null;  </div><div class="line">      private static flag = false;</div><div class="line">      private Singleton()&#123;</div><div class="line">            if(flag == false)&#123;</div><div class="line">                  flag = true;</div><div class="line">                  ....</div><div class="line">            &#125;else&#123;</div><div class="line">                    throw new RuntimeException(&quot;不能乱来，实例已经创建好了，请走正门&quot;)</div><div class="line">            &#125;</div><div class="line">      &#125;</div><div class="line">      public static  Singleton getInstance()&#123;</div><div class="line">           if(instance == null)&#123;//A</div><div class="line">                    synchronized(Singleton.class)&#123;</div><div class="line">                            if(instance == null)&#123;//B</div><div class="line">                                   instance = new Singleton();</div><div class="line">                            &#125;</div><div class="line">                    &#125;</div><div class="line">           &#125;</div><div class="line">           return instance;</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这是何意呢，我们 来模拟一下线程执行就知道了 线程1和线程2同时调用了getInstance(),都判断出了Instance为null，线程1先进入了同步代码块，进行了锁定，开始实例化，线程2就等着，实例化完成以后，同步代码块取消锁定，线程2进入，注意这时候实例已经有了，不需要在进行创建了，所以这里要做第二次检查，这就是double-check的由来了。这样也算是相当完美的单例模式了，为啥是相当完美，因为有的前辈在使用的时候就遇到了JVM指令重排的坑了。</p>
+<p>首先什么叫指令重排，概念什么的自行Google，大致就是说JVM为了优化执行可能会对程序指令进行重排，虽然程序指令执行顺序进行了改变，但是执行结果是必须得保持一致的，JVM如何来保证呢，就是仅对互相没有依赖关系的指令进行重排，这样就保证了执行结果一致。</p>
+<p>这样的指令重排不会影响最终结果那为何还会是个坑呢，首先我们来看看坑在哪儿，注意Instance = new Singleton();这句代码，实际上，JVM对于这句代码是三个步骤。</p>
+<pre><code>1. 分配内存
+2. 在分配好的内存中初始化实例
+3. 将内存地址引用赋值给instance
+</code></pre><p>这三个步骤,2依赖于1,3依赖与1，但是2和3直接没有相互依赖，所以在JVM中可能对2、3步骤进行重排，执行顺序变成了1,3,2，这样的重排在单线程应用中也没有什么问题。但是在多线程中就不一样了。现在我们把一个线程在获取单例的重要步骤列举一下</p>
+<pre><code>A. 判断Instance是否为null
+B. 为null 进行实例化
+     1. 分配内存
+     2. 在分配好的内存中初始化实例
+     3. 将内存地址引用赋值给instance
+C. 不为null 直接返回
+</code></pre><p>在指令重排的情况下，线程一的执行顺序为A-&gt;B-&gt;B1-&gt;B3-&gt;B2,当需要实例化的对象比较大时，线程一执行到B2，此时Instance已经有值了，就是B2正在初始化的那片内存；此时线程二再执行就直接是A-&gt;C,因为Instance已经有值了，这样问题就出来了，现在线程二获取到的实例是没有完成初始化的实例，这可是要出大事情的。</p>
+<p>为了解决这个坑，在Jdk1.5以后，Java对内存模型做了修改，这样在JDK1.5+，volatile这个关键字就可以来解决这个问题了，也就是说在jdk1.5之前，double-check是有毛病的。现在我们来看看volatile是怎么样解决这个问题的，先了解一下volatile；volatile关键字的学问还是有一点大，在这里先讲讲解决这个问题所用的的特性，其他的下次专门分析分析；在这里volatile的作用就是禁止JVM指令重排，由volatile声明的变量时，将禁止JVM对这个变量的相关指令进行重排，也就是不会出现前面的那种情况了，操作起来特比简单，直接代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class Singleton&#123;</div><div class="line">      private volatile static Singleton instance = null;  </div><div class="line">      private static flag = false;</div><div class="line">      private Singleton()&#123;</div><div class="line">            if(flag == false)&#123;</div><div class="line">                flag = true;</div><div class="line">                ....</div><div class="line">            &#125;else&#123;</div><div class="line">                throw new RuntimeException(&quot;不能乱来，实例已经创建好了，请走正门&quot;);</div><div class="line">            &#125;</div><div class="line">      &#125;</div><div class="line">      public static  Singleton getInstance()&#123;</div><div class="line">           if(instance == null)&#123;//A</div><div class="line">                    synchronized(Singleton.class)&#123;</div><div class="line">                            if(instance == null)&#123;//B</div><div class="line">                                   instance = new Singleton();</div><div class="line">                            &#125;</div><div class="line">                    &#125;</div><div class="line">           &#125;</div><div class="line">           return instance;</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>就这样在instance = new Singleton();就不会发生指令重排了，这样单例模式也就可以了。</p>
+<p>本文结合网络上各路大神所写的文章进行分析，并通过自己的理解进行文，难免会出现相同或者我理解有错误，欢迎批评指正，谢谢。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                欢迎转载,转载时请注明：转载自<a href="https://itbeezh.github.io/programming/20170402/只是想写个单例模式/index.html">https://itbeezh.github.io/programming/20170402/只是想写个单例模式/index.html</a>
+            
+        </div>
+        <div>
+            
+                版权声明: <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)</a>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/Hexo/20171022/hello-world/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget introduce">
+        <h3 class="title">个人简介</h3>
+        <div>
+            本人男
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="mailto:itbeezh@gmail.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/img/beezyx.png" rel="external nofollow" title="beezyx" target="_blank">
+			    	<i class="wechat fa fa-wechat"></i>
+			    </a>
+            
+	            <a href="//github.com/itbeezh" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="github fa fa-github"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programming/"><i class="fa" aria-hidden="true">编程</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/"><i class="fa" aria-hidden="true">十月 2017</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/"><i class="fa" aria-hidden="true">四月 2017</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+      
+        <a href="/tags/Hexo/" style="font-size: 1em;">Hexo</a> <a href="/tags/Java/" style="font-size: 1em;">Java</a> <a href="/tags/Singleton/" style="font-size: 1em;">Singleton</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">打赏</h3> 
+        <div class="content social">
+			
+				<div id="wechat" style="display: inline-block">
+					<img id="wechat_qr" src="/img/wechatpay.png" alt="微信支付"/>
+					<p>微信支付</p>
+				</div>
+			
+            
+				<div id="wechat" style="display: inline-block">
+					<img id="wechat_qr" src="/img/alipay.png" alt="支付宝"/>
+					<p>支付宝</p>
+				</div>
+			
+        </div>
+    </div>
+
+
+        
+        
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017 <i class="fa fa-heart"></i> ZhangYuanXia
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <script src="/assets/highlight.pack.js?rev=@@hash"></script>
+  <script>
+    hljs.initHighlightingOnLoad(); //初始化代码高亮 
+  </script>
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
